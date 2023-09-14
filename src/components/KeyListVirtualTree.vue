@@ -45,7 +45,7 @@
     >
       <span class="key-list-custom-node" slot-scope="{node, data}" :title="node.label">
         <i v-if="!node.isLeaf" :class="node.expanded?'fa fa-folder-open':'fa fa-folder'"></i>
-        <span>{{ node.label }}</span>
+        <span>{{ formatKey(node.label) }}</span>
         <span v-if="!node.isLeaf" class="key-list-count">({{ data.keyCount }})</span>
       </span>
     </VueEasyTree>
@@ -100,6 +100,14 @@ export default {
     }
   },
   methods: {
+    formatKey(key) {
+      if (this.separator) {
+        const split = key.split(this.separator);
+        return split[split.length - 1];
+      }
+
+      return key;
+    },
     rightClick(event, data, node) {
       this.hideAllMenus();
 
